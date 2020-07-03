@@ -292,10 +292,7 @@ class TickerBase():
                 self._institutional_holders['% Out'] = self._institutional_holders[
                     '% Out'].str.replace('%', '').astype(float)/100
         except:
-            if not self._major_holders:
-                self._major_holders = {}
-            if not self._institutional_holders:
-                self._institutional_holders = {}
+            pass
 
         # sustainability
         d = {}
@@ -367,13 +364,16 @@ class TickerBase():
             (self._financials, 'incomeStatement', 'incomeStatementHistory')
         ):
 
-            item = key[1] + 'History'
-            if isinstance(data.get(item), dict):
-                key[0]['yearly'] = cleanup(data[item][key[2]])
+            try:
+                item = key[1] + 'History'
+                if isinstance(data.get(item), dict):
+                    key[0]['yearly'] = cleanup(data[item][key[2]])
 
-            item = key[1]+'HistoryQuarterly'
-            if isinstance(data.get(item), dict):
-                key[0]['quarterly'] = cleanup(data[item][key[2]])
+                item = key[1]+'HistoryQuarterly'
+                if isinstance(data.get(item), dict):
+                    key[0]['quarterly'] = cleanup(data[item][key[2]])
+            except:
+                continue
 
         # earnings
         if isinstance(data.get('earnings'), dict):
