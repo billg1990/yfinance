@@ -318,9 +318,9 @@ class TickerBase():
             if isinstance(data.get(item), dict):
                 self._info.update(data[item])
 
-        self._info['regularMarketPrice'] = self._info['regularMarketOpen']
-        self._info['logo_url'] = ""
         try:
+            self._info['regularMarketPrice'] = self._info['regularMarketOpen']
+            self._info['logo_url'] = ""
             domain = self._info['website'].split(
                 '://')[1].split('/')[0].replace('www.', '')
             self._info['logo_url'] = 'https://logo.clearbit.com/%s' % domain
